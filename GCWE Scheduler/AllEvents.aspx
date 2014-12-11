@@ -9,8 +9,8 @@
 </head>
 <body>
     <h2 class="auto-style1"><strong>All Events</strong></h2>
-
-    <form id="form1" runat="server">
+    <a href="ScheduleEvents.aspx">Back</a><br />
+&nbsp;<form id="form1" runat="server">
         <div class="gridview">
             <asp:GridView ID="GridView1" runat="server" AllowSorting="True" AutoGenerateColumns="False" CellPadding="3" DataKeyNames="event_id" DataSourceID="SqlDataSource1" BackColor="White" BorderColor="#999999" BorderStyle="None" BorderWidth="1px" GridLines="Vertical">
                 <AlternatingRowStyle BackColor="#DCDCDC" />
