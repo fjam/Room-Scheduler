@@ -5,49 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Events Taking Place</title>
-    <style type="text/css">
-        body {
-            background-color: ActiveCaption;
-        }
-
-        .auto-style1 {
-            text-align: center;
-        }
-
-        .auto-style2 {
-            width: 147px;
-        }
-
-        .auto-style3 {
-            width: 147px;
-            text-align: right;
-        }
-
-        .auto-style4 {
-            width: 180px;
-        }
-
-        .auto-style5 {
-            width: 147px;
-            text-align: right;
-            height: 26px;
-        }
-
-        .auto-style6 {
-            width: 180px;
-            height: 26px;
-        }
-
-        .auto-style7 {
-            height: 26px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="Styles/style.css" />
 </head>
 <body>
     <form id="form1" runat="server">
         <div>
 
-            <h2 class="auto-style1"><strong>Brooklyn College - GCWE Events Calendar</strong></h2>
+            <h2 class="Title"><strong>Brooklyn College - GCWE Events Calendar</strong></h2>
 
         </div>
         <table style="width: 100%;">
@@ -61,8 +25,8 @@
                 </td>
             </tr>
             <tr>
-                <td class="auto-style3">Password</td>
-                <td class="auto-style4">
+                <td class="passText">Password</td>
+                <td class="login">
                     <asp:TextBox ID="TextBoxP" runat="server" TextMode="Password" Width="144px" OnTextChanged="TextBoxP_TextChanged"></asp:TextBox>
                 </td>
                 <td>
@@ -70,8 +34,8 @@
                 </td>
             </tr>
             <tr>
-                <td class="auto-style2">&nbsp;</td>
-                <td class="auto-style4">
+                <td class="empty">&nbsp;</td>
+                <td class="login">
                     <asp:Label ID="Label1" runat="server"></asp:Label>
                     <br />
                     <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Login" Height="23px" Width="87px" />
@@ -82,7 +46,7 @@
         </table>
         <br />
         <div id="calendar">
-            <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" BackColor="#FFFFCC" BorderColor="#FFCC66" BorderWidth="1px" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#663399" ShowGridLines="True">
+            <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" Height="211px" Width="239px" BackColor="#FFFFCC" BorderColor="#FFCC66" BorderWidth="1px" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#663399" ShowGridLines="True">
                 <DayHeaderStyle BackColor="#FFCC66" Font-Bold="True" Height="1px" />
                 <NextPrevStyle Font-Size="9pt" ForeColor="#FFFFCC" />
                 <OtherMonthDayStyle ForeColor="#CC9966" />
@@ -106,80 +70,6 @@
                 </ul>
             </div>
         </div>
-
-        <style type='text/css'>
-            .my-legend .legend-title {
-                text-align: left;
-                margin-bottom: 8px;
-                font-weight: bold;
-                font-size: 90%;
-            }
-
-            .my-legend .legend-scale ul {
-                margin: 0;
-                padding: 0;
-                float: left;
-                list-style: none;
-                width: 253px;
-                height: 35px;
-            }
-
-                .my-legend .legend-scale ul li {
-                    display: block;
-                    float: left;
-                    width: 50px;
-                    margin-bottom: 6px;
-                    text-align: center;
-                    font-size: 80%;
-                    list-style: none;
-                }
-
-            .my-legend ul.legend-labels li span {
-                display: block;
-                float: left;
-                height: 15px;
-                width: 50px;
-            }
-
-            .my-legend .legend-source {
-                font-size: 70%;
-                color: #999;
-                clear: both;
-            }
-
-            .my-legend a {
-                color: #777;
-            }
-
-            .my-legend {
-                margin-left: 250px;
-                clear: both;
-            }
-
-            #Calendar1 {
-                position: absolute;
-                top: 181px;
-                left: 10px;
-                height: 211px;
-                width: 239px;
-            }
-
-            #table1 {
-                clear: both;
-                margin-left: 250px;
-                margin-top: 20px;
-            }
-
-            #table2 {
-                margin-right: 50px;
-                margin-top: 20px;
-            }
-
-            #staffhourtable {
-                margin-top: 150px;
-            }
-        </style>
-
 
         <div id="tables">
 

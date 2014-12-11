@@ -4,22 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <style>
-     body{
-            background-color:ActiveCaption;
-        }
-     .gridview {
-        width: 100%; 
-        word-wrap:break-word;
-        table-layout: fixed;
-     }
-        .auto-style1 {
-            width: 100%;
-        }
-        .auto-style2 {
-            width: 172px;
-        }
-    </style>  
+        <link rel="stylesheet" type="text/css" href="Styles/style.css" />
     <title>Employees</title>
 </head>
 <body>
@@ -107,61 +92,61 @@
         <strong>Add Employee:</strong><br />
         <table class="auto-style1">
             <tr>
-                <td class="auto-style2">FirstName:</td>
+                <td class="titles">FirstName:</td>
                 <td>
                     <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
-                <td class="auto-style2">LastName:</td>
+                <td class="titles">LastName:</td>
                 <td>
                     <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
-                <td class="auto-style2">XT:</td>
+                <td class="titles">XT:</td>
                 <td>
                     <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
-                <td class="auto-style2">Room:</td>
+                <td class="titles">Room:</td>
                 <td>
                     <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
-                <td class="auto-style2">Monday:</td>
+                <td class="titles">Monday:</td>
                 <td>
                     <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
-                <td class="auto-style2">Tuesday:</td>
+                <td class="titles">Tuesday:</td>
                 <td>
                     <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
-                <td class="auto-style2">Wednesday:</td>
+                <td class="titles">Wednesday:</td>
                 <td>
                     <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
-                <td class="auto-style2">Thursday:</td>
+                <td class="titles">Thursday:</td>
                 <td>
                     <asp:TextBox ID="TextBox8" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
-                <td class="auto-style2">Friday:</td>
+                <td class="titles">Friday:</td>
                 <td>
                     <asp:TextBox ID="TextBox9" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
-                <td class="auto-style2">&nbsp;</td>
+                <td class="titles">&nbsp;</td>
                 <td>
                    
                     <asp:Button ID="Button1" runat="server" style="text-align: right" Text="Submit" OnClick="Button1_Click" />
