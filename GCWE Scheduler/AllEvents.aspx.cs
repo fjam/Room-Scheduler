@@ -9,11 +9,12 @@ namespace GCWE_Scheduler
 {
     public partial class AllEvents : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e) {
+        protected void Page_Load(object sender, EventArgs e)
+        {
             if (Session["New"] == null)
-             {
-                 Response.Redirect("Default.aspx");
-             }
+            {
+                Response.Redirect("Default.aspx");
+            }
         }
 
     }

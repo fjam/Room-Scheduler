@@ -44,10 +44,10 @@
                 <SortedDescendingCellStyle BackColor="#CAC9C9" />
                 <SortedDescendingHeaderStyle BackColor="#000065" />
             </asp:GridView>
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server"
                 ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Events]"
                 DeleteCommand="DELETE FROM [Events] WHERE [event_id] = @original_event_id"
-                ConflictDetection="CompareAllValues" 
+                ConflictDetection="CompareAllValues"
                 InsertCommand="INSERT INTO [Events] ([Title], [EventStart], [EventEnd], [Repeat], [Days], [Room], [StartDate], [User], [Notes], [Type], [Instructor], [Section], [EndDate]) VALUES (@Title, @EventStart, @EventEnd, @Repeat, @Days, @Room, @StartDate, @User, @Notes, @Type, @Instructor, @Section, @EndDate)"
                 OldValuesParameterFormatString="original_{0}"
                 UpdateCommand="UPDATE [Events] SET [Title] = @Title, [EventStart] = @EventStart, [EventEnd] = @EventEnd, [Repeat] = @Repeat, [Days] = @Days, [Room] = @Room, [StartDate] = @StartDate, [User] = @User, [Notes] = @Notes, [Type] = @Type, [Instructor] = @Instructor, [Section] = @Section, [EndDate] = @EndDate WHERE [event_id] = @original_event_id">

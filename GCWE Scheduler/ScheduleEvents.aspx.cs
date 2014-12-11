@@ -14,7 +14,6 @@ namespace GCWE_Scheduler
 {
     public partial class Default : System.Web.UI.Page
     {
-
         private string username = "Unknown";
         private TimeSpan dayStarts = TimeSpan.FromHours(9);
         private TimeSpan dayEnds = TimeSpan.FromHours(22);
@@ -28,18 +27,21 @@ namespace GCWE_Scheduler
 
         Dictionary<int, string> trueRepeatedEvents = new Dictionary<int, string>();
 
-        protected void Page_Load(object sender, EventArgs e) {
-            if (Session["New"] != null) {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (Session["New"] != null)
+            {
                 Label2.Text = "Welcome: " + Session["New"].ToString();
                 username = Session["New"].ToString();
             }
             else
             {
                 Response.Redirect("Default.aspx");
-            }    
+            }
         }
 
-        protected void Calendar1_SelectionChanged(object sender, EventArgs e) {
+        protected void Calendar1_SelectionChanged(object sender, EventArgs e)
+        {
 
             SqlConnection thisConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
 
@@ -52,24 +54,31 @@ namespace GCWE_Scheduler
 
             fillList();
 
-            foreach (string s in a) {
+            foreach (string s in a)
+            {
                 string[] arr = s.Split('#');
                 string[] daySplit;
 
-                if (arr[4].ToString() == "1") {
+                if (arr[4].ToString() == "1")
+                {
                     trueRepeatedEvents.Add(Convert.ToInt32(arr[0]), arr[5].ToString());
                     thisCommand.CommandText = "SELECT * from events where repeat = 1 AND startDate <= '" + Calendar1.SelectedDate.ToShortDateString() + "' AND endDate >= '" + Calendar1.SelectedDate.ToShortDateString() + "' and charindex('" + Calendar1.SelectedDate.DayOfWeek.ToString() + "', Days) != 0";
 
                     thisConnection.Open();
                     SqlDataReader reader = thisCommand.ExecuteReader();
 
-                    if (arr[5].Contains(':')) {
+                    if (arr[5].Contains(':'))
+                    {
                         daySplit = arr[5].Split(':');
-                        foreach (string value in daySplit) {
-                            if (value == Calendar1.SelectedDate.DayOfWeek.ToString()) {
-                                if (DateTime.Parse(arr[7]) <= Calendar1.SelectedDate) {
+                        foreach (string value in daySplit)
+                        {
+                            if (value == Calendar1.SelectedDate.DayOfWeek.ToString())
+                            {
+                                if (DateTime.Parse(arr[7]) <= Calendar1.SelectedDate)
+                                {
 
-                                    while (reader.Read()) {
+                                    while (reader.Read())
+                                    {
                                         int event_id = reader.GetInt32(0);
                                         string title = reader.GetString(1);
                                         TimeSpan eventStart = reader.GetTimeSpan(2);
@@ -88,7 +97,8 @@ namespace GCWE_Scheduler
 
                                         string concat = event_id.ToString() + "#" + title + "#" + eventStart.ToString() + "#" + eventEnd.ToString() + "#" + repeat.ToString() + "#" + Days + "#" + room + "#" + startDate.ToString() + "#" + endDate.ToString();
 
-                                        if (!(v.Contains(concat))) {
+                                        if (!(v.Contains(concat)))
+                                        {
                                             v.Add(concat);
                                             ex.Add(concat);
                                         }
@@ -97,7 +107,8 @@ namespace GCWE_Scheduler
                                         string row = "<tr><td BGCOLOR='" + color + "'>" + room + "</td><td>" + section + "</td><td>" + title + "</td><td>" + DateTime.Parse(eventStart.ToString()).ToLongTimeString() + "</td><td>" + DateTime.Parse(eventEnd.ToString()).ToLongTimeString() + "</td><td>" + instructor + "</td><td>" + notes + "</td></tr>";
 
 
-                                        if ((htmlStr1.Contains(row)) == false) {
+                                        if ((htmlStr1.Contains(row)) == false)
+                                        {
                                             htmlStr1 += row;
                                         }
 
@@ -106,11 +117,15 @@ namespace GCWE_Scheduler
                             }
                         }
                     }
-                    else {
-                        if (arr[5].ToString() == Calendar1.SelectedDate.DayOfWeek.ToString()) {
-                            if (DateTime.Parse(arr[7]) <= Calendar1.SelectedDate) {
+                    else
+                    {
+                        if (arr[5].ToString() == Calendar1.SelectedDate.DayOfWeek.ToString())
+                        {
+                            if (DateTime.Parse(arr[7]) <= Calendar1.SelectedDate)
+                            {
 
-                                while (reader.Read()) {
+                                while (reader.Read())
+                                {
                                     int event_id = reader.GetInt32(0);
                                     string title = reader.GetString(1);
                                     TimeSpan eventStart = reader.GetTimeSpan(2);
@@ -128,8 +143,9 @@ namespace GCWE_Scheduler
                                     color = SwitchColor(type);
 
                                     string concat = event_id.ToString() + "#" + title + "#" + eventStart.ToString() + "#" + eventEnd.ToString() + "#" + repeat.ToString() + "#" + Days + "#" + room + "#" + startDate.ToString() + "#" + endDate.ToString();
-                                    
-                                    if (!(v.Contains(concat))) {
+
+                                    if (!(v.Contains(concat)))
+                                    {
                                         v.Add(concat);
                                         ex.Add(concat);
                                     }
@@ -138,7 +154,8 @@ namespace GCWE_Scheduler
                                     string row = "<tr><td BGCOLOR='" + color + "'>" + room + "</td><td>" + section + "</td><td>" + title + "</td><td>" + DateTime.Parse(eventStart.ToString()).ToLongTimeString() + "</td><td>" + DateTime.Parse(eventEnd.ToString()).ToLongTimeString() + "</td><td>" + instructor + "</td><td>" + notes + "</td></tr>";
 
 
-                                    if ((htmlStr1.Contains(row)) == false) {
+                                    if ((htmlStr1.Contains(row)) == false)
+                                    {
                                         htmlStr1 += row;
 
                                     }
@@ -148,7 +165,8 @@ namespace GCWE_Scheduler
                     }
                     thisConnection.Close();
                 }
-                else {
+                else
+                {
 
                     thisCommand.CommandText = "SELECT * from events where repeat = 0 AND startDate = '" + Calendar1.SelectedDate.ToShortDateString() + "' AND endDate >= '" + Calendar1.SelectedDate.ToShortDateString() + "' and charindex('" + Calendar1.SelectedDate.DayOfWeek.ToString() + "', Days) != 0";
 
@@ -156,11 +174,15 @@ namespace GCWE_Scheduler
                     SqlDataReader reader = thisCommand.ExecuteReader();
 
 
-                    if (arr[4].ToString() == "0") {
-                        if (arr[5].ToString() == Calendar1.SelectedDate.DayOfWeek.ToString()) {
-                            if (DateTime.Parse(arr[7]) <= Calendar1.SelectedDate) {
+                    if (arr[4].ToString() == "0")
+                    {
+                        if (arr[5].ToString() == Calendar1.SelectedDate.DayOfWeek.ToString())
+                        {
+                            if (DateTime.Parse(arr[7]) <= Calendar1.SelectedDate)
+                            {
 
-                                while (reader.Read()) {
+                                while (reader.Read())
+                                {
                                     int event_id = reader.GetInt32(0);
                                     string title = reader.GetString(1);
                                     TimeSpan eventStart = reader.GetTimeSpan(2);
@@ -179,14 +201,16 @@ namespace GCWE_Scheduler
 
                                     string concat = event_id.ToString() + "#" + title + "#" + eventStart.ToString() + "#" + eventEnd.ToString() + "#" + repeat.ToString() + "#" + Days + "#" + room + "#" + startDate.ToString() + "#" + endDate.ToString();
 
-                                    if (!(v.Contains(concat))) {
+                                    if (!(v.Contains(concat)))
+                                    {
                                         v.Add(concat);
                                         ex.Add(concat);
                                     }
 
                                     string row = "<tr><td BGCOLOR='" + color + "'>" + room + "</td><td>" + section + "</td><td>" + title + "</td><td>" + DateTime.Parse(eventStart.ToString()).ToLongTimeString() + "</td><td>" + DateTime.Parse(eventEnd.ToString()).ToLongTimeString() + "</td><td>" + instructor + "</td><td>" + notes + "</td></tr>";
 
-                                    if ((htmlStr1.Contains(row)) == false) {
+                                    if ((htmlStr1.Contains(row)) == false)
+                                    {
                                         htmlStr1 += row;
 
                                     }
@@ -201,21 +225,25 @@ namespace GCWE_Scheduler
             freeTablefunc();
         }
 
-        protected void Button1_Click(object sender, EventArgs e) {
+        protected void Button1_Click(object sender, EventArgs e)
+        {
             Session["New"] = null;
             Response.Redirect("Default.aspx");
         }
 
-        private void freeTablefunc() {
+        private void freeTablefunc()
+        {
             string cs = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
 
-            using (SqlConnection conn = new SqlConnection(cs)) {
+            using (SqlConnection conn = new SqlConnection(cs))
+            {
                 SqlCommand thisCommand = conn.CreateCommand();
                 thisCommand.CommandText = "SELECT title FROM Room";
                 conn.Open();
                 SqlDataReader reader = thisCommand.ExecuteReader();
 
-                while (reader.Read()) {
+                while (reader.Read())
+                {
                     string room = reader.GetString(0);
                     rooms.Add(room);
                 }
@@ -235,35 +263,43 @@ namespace GCWE_Scheduler
                 let End = DateTime.Parse(parts[3])
                 orderby Start, End
                 group new Period(Start, End) by parts[6] into groups
-                select new {
+                select new
+                {
                     Room = groups.Key,
                     FreePeriods =
                     groups.Aggregate(new[] { full_day },
                     (ys, x) => ys.SelectMany(y => y.Split(x)).ToArray()),
                 };
 
-            foreach (var s in free_times) {
+            foreach (var s in free_times)
+            {
                 htmlStr += "<tr><td BGCOLOR='00ff21'>" + s.Room + ":</td></tr>";
-                foreach (var fp in s.FreePeriods) {
+                foreach (var fp in s.FreePeriods)
+                {
                     htmlStr += "<tr><td BGCOLOR='00ff21'>" + "" + "</td><td>" + fp.StartTime.ToLongTimeString() + "</td><td>" + fp.EndTime.ToLongTimeString() + "</td></tr>";
                 }
             }
 
-            foreach (string k in rooms) {
+            foreach (string k in rooms)
+            {
                 bool b = false;
-                foreach (var l in free_times) {
-                    if (k == l.Room) {
+                foreach (var l in free_times)
+                {
+                    if (k == l.Room)
+                    {
                         b = true;
                     }
                 }
-                if (!b) {
+                if (!b)
+                {
                     htmlStr += "<tr><td BGCOLOR= '00ff21'>" + k + ":</td><td> 9:00:00 AM </td><td> 10:00:00 PM </td></tr>";
                 }
             }
             freeTable.InnerHtml = htmlStr;
         }
 
-        public string printTable() {
+        public string printTable()
+        {
             string htmlStr = "";
             SqlConnection thisConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
             SqlCommand thisCommand = thisConnection.CreateCommand();
@@ -271,7 +307,8 @@ namespace GCWE_Scheduler
             thisConnection.Open();
             SqlDataReader reader = thisCommand.ExecuteReader();
             string color = "#ffff00";
-            while (reader.Read()) {
+            while (reader.Read())
+            {
                 int event_id = reader.GetInt32(0);
                 string text = reader.GetString(1);
                 TimeSpan eventStart = reader.GetTimeSpan(2);
@@ -289,13 +326,15 @@ namespace GCWE_Scheduler
             return htmlStr;
         }
 
-        private void fillList() {
+        private void fillList()
+        {
             SqlConnection thisConnection2 = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
             SqlCommand thisCommand = thisConnection2.CreateCommand();
             thisCommand.CommandText = "SELECT * FROM events WHERE endDate >= '" + DateTime.Now.ToString("MM/dd/yyyy") + "'";
             thisConnection2.Open();
             SqlDataReader reader = thisCommand.ExecuteReader();
-            while (reader.Read()) {
+            while (reader.Read())
+            {
                 int event_id = reader.GetInt32(0);
                 string title = reader.GetString(1);
                 TimeSpan eventStart = reader.GetTimeSpan(2);
@@ -313,7 +352,8 @@ namespace GCWE_Scheduler
 
                 string str = event_id.ToString() + "#" + title + "#" + eventStart.ToString() + "#" + eventEnd.ToString() + "#" + repeat.ToString() + "#" + Days + "#" + room + "#" + startDate.ToString() + "#" + endDate.ToString();
 
-                if (!(a.Contains(str))) {
+                if (!(a.Contains(str)))
+                {
                     a.Add(event_id.ToString() + "#" + title + "#" + eventStart.ToString() + "#" + eventEnd.ToString() + "#" +
                         repeat.ToString() + "#" + Days + "#" + room + "#" + startDate.ToString() + "#" + user + "#" + notes);
                 }
@@ -321,10 +361,12 @@ namespace GCWE_Scheduler
             thisConnection2.Close();
         }
 
-        private string SwitchColor(string type) {
+        private string SwitchColor(string type)
+        {
             string color = "#ffff00";
 
-            switch (type) {
+            switch (type)
+            {
                 case "Class":
                     color = "#ff0000";
                     break;
@@ -339,8 +381,10 @@ namespace GCWE_Scheduler
             return color;
         }
 
-        protected void Submit_Click(object sender, EventArgs e) {
-            try {
+        protected void Submit_Click(object sender, EventArgs e)
+        {
+            try
+            {
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
                 SqlConnection thisConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
 
@@ -350,7 +394,7 @@ namespace GCWE_Scheduler
 
 
                 string query = "INSERT INTO Events ([Title], [eventStart], [EventEnd],[Repeat], [Days], [Room], [StartDate], [User], [notes], [type], [Instructor], [Section], [EndDate]) VALUES (@Title, @EventStart, @EventEnd, @Repeat, @Days, @Room, @StartDate, @User, @notes, @type, @Instructor, @Section, @EndDate);";
-  
+
                 SqlCommand thisCommands = conn.CreateCommand();
                 SqlCommand thisCommand = thisConnection.CreateCommand();
 
@@ -499,33 +543,44 @@ namespace GCWE_Scheduler
                     }
                 }
 
-                foreach (string s in a) {
+                foreach (string s in a)
+                {
                     string[] arr = s.Split('#');
                     string[] daySplit;
 
-                    if (arr[4].ToString() == "1") {
-                        if (arr[5].Contains(':')) {
+                    if (arr[4].ToString() == "1")
+                    {
+                        if (arr[5].Contains(':'))
+                        {
                             daySplit = arr[5].Split('#');
-                            foreach (string day in daySplit) {
-                                if (day == Calendar2.SelectedDate.DayOfWeek.ToString()) {
-                                    if (DateTime.Parse(arr[7]) <= Calendar2.SelectedDate) {
-                                        if (arr[6] == DropDownList1.SelectedValue) {
-                                            if (DateTime.Parse(StartTimeTextBox.Text) >= DateTime.Parse(arr[2]) && DateTime.Parse(StartTimeTextBox.Text) <= DateTime.Parse(arr[3])) {
+                            foreach (string day in daySplit)
+                            {
+                                if (day == Calendar2.SelectedDate.DayOfWeek.ToString())
+                                {
+                                    if (DateTime.Parse(arr[7]) <= Calendar2.SelectedDate)
+                                    {
+                                        if (arr[6] == DropDownList1.SelectedValue)
+                                        {
+                                            if (DateTime.Parse(StartTimeTextBox.Text) >= DateTime.Parse(arr[2]) && DateTime.Parse(StartTimeTextBox.Text) <= DateTime.Parse(arr[3]))
+                                            {
                                                 System.Diagnostics.Debug.WriteLine("1 " + s);
                                                 counter = true;
                                             }
-                                            if (DateTime.Parse(EndTimeTextBox.Text) <= DateTime.Parse("9:00:00") && DateTime.Parse(EndTimeTextBox.Text) >= DateTime.Parse("22:00:00")) {
+                                            if (DateTime.Parse(EndTimeTextBox.Text) <= DateTime.Parse("9:00:00") && DateTime.Parse(EndTimeTextBox.Text) >= DateTime.Parse("22:00:00"))
+                                            {
                                                 System.Diagnostics.Debug.WriteLine("2 " + s);
 
                                                 counter = true;
                                             }
 
-                                            if (DateTime.Parse(EndTimeTextBox.Text) >= DateTime.Parse(arr[2]) && DateTime.Parse(EndTimeTextBox.Text) <= DateTime.Parse(arr[3])) {
+                                            if (DateTime.Parse(EndTimeTextBox.Text) >= DateTime.Parse(arr[2]) && DateTime.Parse(EndTimeTextBox.Text) <= DateTime.Parse(arr[3]))
+                                            {
                                                 System.Diagnostics.Debug.WriteLine("3 " + s);
 
                                                 counter = true;
                                             }
-                                            if(DateTime.Parse(StartTimeTextBox.Text) <= DateTime.Parse(arr[2]) && DateTime.Parse(EndTimeTextBox.Text) >= DateTime.Parse(arr[3])){
+                                            if (DateTime.Parse(StartTimeTextBox.Text) <= DateTime.Parse(arr[2]) && DateTime.Parse(EndTimeTextBox.Text) >= DateTime.Parse(arr[3]))
+                                            {
                                                 counter = true;
                                             }
                                         }
@@ -533,22 +588,29 @@ namespace GCWE_Scheduler
                                 }
                             }
                         }
-                        else if (!(arr[5].Contains(':'))) {
-                            if (arr[5] == Calendar2.SelectedDate.DayOfWeek.ToString()) {
-                                if (DateTime.Parse(arr[7]) <= Calendar2.SelectedDate) {
-                                    if (arr[6] == DropDownList1.SelectedValue) {
-                                        if (DateTime.Parse(StartTimeTextBox.Text) >= DateTime.Parse(arr[2]) && DateTime.Parse(StartTimeTextBox.Text) <= DateTime.Parse(arr[3])) {
+                        else if (!(arr[5].Contains(':')))
+                        {
+                            if (arr[5] == Calendar2.SelectedDate.DayOfWeek.ToString())
+                            {
+                                if (DateTime.Parse(arr[7]) <= Calendar2.SelectedDate)
+                                {
+                                    if (arr[6] == DropDownList1.SelectedValue)
+                                    {
+                                        if (DateTime.Parse(StartTimeTextBox.Text) >= DateTime.Parse(arr[2]) && DateTime.Parse(StartTimeTextBox.Text) <= DateTime.Parse(arr[3]))
+                                        {
                                             System.Diagnostics.Debug.WriteLine("4 " + s);
 
                                             counter = true;
                                         }
-                                        if (DateTime.Parse(EndTimeTextBox.Text) <= DateTime.Parse("9:00:00") && DateTime.Parse(EndTimeTextBox.Text) >= DateTime.Parse("22:00:00")) {
+                                        if (DateTime.Parse(EndTimeTextBox.Text) <= DateTime.Parse("9:00:00") && DateTime.Parse(EndTimeTextBox.Text) >= DateTime.Parse("22:00:00"))
+                                        {
                                             System.Diagnostics.Debug.WriteLine("5 " + s);
 
                                             counter = true;
                                         }
 
-                                        if (DateTime.Parse(EndTimeTextBox.Text) >= DateTime.Parse(arr[2]) && DateTime.Parse(EndTimeTextBox.Text) <= DateTime.Parse(arr[3])) {
+                                        if (DateTime.Parse(EndTimeTextBox.Text) >= DateTime.Parse(arr[2]) && DateTime.Parse(EndTimeTextBox.Text) <= DateTime.Parse(arr[3]))
+                                        {
                                             System.Diagnostics.Debug.WriteLine("6 " + s);
 
                                             counter = true;
@@ -562,24 +624,31 @@ namespace GCWE_Scheduler
                             }
                         }
                     }
-                    else if (arr[4].ToString() == "0") {
-                        if (DateTime.Parse(arr[7]) <= Calendar2.SelectedDate) {
-                            if (arr[5] == Calendar2.SelectedDate.DayOfWeek.ToString()) {
+                    else if (arr[4].ToString() == "0")
+                    {
+                        if (DateTime.Parse(arr[7]) <= Calendar2.SelectedDate)
+                        {
+                            if (arr[5] == Calendar2.SelectedDate.DayOfWeek.ToString())
+                            {
 
-                                if (arr[6] == DropDownList1.SelectedValue) {
+                                if (arr[6] == DropDownList1.SelectedValue)
+                                {
                                     System.Diagnostics.Debug.WriteLine(DropDownList1.SelectedValue);
-                                    if (DateTime.Parse(StartTimeTextBox.Text) >= DateTime.Parse(arr[2]) && DateTime.Parse(StartTimeTextBox.Text) <= DateTime.Parse(arr[3])) {
+                                    if (DateTime.Parse(StartTimeTextBox.Text) >= DateTime.Parse(arr[2]) && DateTime.Parse(StartTimeTextBox.Text) <= DateTime.Parse(arr[3]))
+                                    {
                                         System.Diagnostics.Debug.WriteLine("7 " + s);
 
                                         counter = true;
                                     }
-                                    if (DateTime.Parse(EndTimeTextBox.Text) <= DateTime.Parse("9:00:00") && DateTime.Parse(EndTimeTextBox.Text) >= DateTime.Parse("22:00:00")) {
+                                    if (DateTime.Parse(EndTimeTextBox.Text) <= DateTime.Parse("9:00:00") && DateTime.Parse(EndTimeTextBox.Text) >= DateTime.Parse("22:00:00"))
+                                    {
                                         System.Diagnostics.Debug.WriteLine("8 " + s);
 
                                         counter = true;
                                     }
 
-                                    if (DateTime.Parse(EndTimeTextBox.Text) >= DateTime.Parse(arr[2]) && DateTime.Parse(EndTimeTextBox.Text) <= DateTime.Parse(arr[3])) {
+                                    if (DateTime.Parse(EndTimeTextBox.Text) >= DateTime.Parse(arr[2]) && DateTime.Parse(EndTimeTextBox.Text) <= DateTime.Parse(arr[3]))
+                                    {
                                         System.Diagnostics.Debug.WriteLine("9 " + s);
 
                                         counter = true;
@@ -594,17 +663,20 @@ namespace GCWE_Scheduler
                     }
                 }
 
-                if (counter) {
+                if (counter)
+                {
                     Response.Write("There was an overlapping error please try again.");
                 }
-                else if (counter == false) {
+                else if (counter == false)
+                {
                     com = new SqlCommand(query, conn);
 
                     DateTime dt;
                     bool StartRes = DateTime.TryParse(StartTimeTextBox.Text, out dt);
                     bool EndRes = DateTime.TryParse(EndTimeTextBox.Text, out dt);
 
-                    if (StartRes && EndRes) {
+                    if (StartRes && EndRes)
+                    {
                         dt = DateTime.Parse(StartTimeTextBox.Text.ToString());
 
                         com.Parameters.AddWithValue("@Section", SectionTextBox.Text);
@@ -625,20 +697,23 @@ namespace GCWE_Scheduler
 
                         Response.Write("successful");
                     }
-                    else {
+                    else
+                    {
                         Response.Write("Incorrect Time Format");
                     }
                 }
 
                 conn.Close();
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Response.Write("error: " + ex.ToString() + "<br/>");
                 Response.Write("There seems to be an error, please make sure your times do not conflict with another event.");
             }
         }
 
-        protected void Calendar2_SelectionChanged(object sender, EventArgs e) {
+        protected void Calendar2_SelectionChanged(object sender, EventArgs e)
+        {
             StartDateTextBox.Text = Calendar2.SelectedDate.ToShortDateString();
 
             if (DaysRepeatTextBox.Text == "")
@@ -654,13 +729,16 @@ namespace GCWE_Scheduler
             }
         }
 
-        protected void YesRepeat_CheckedChanged(object sender, EventArgs e) {
-            if (YesRepeat.Checked) {
+        protected void YesRepeat_CheckedChanged(object sender, EventArgs e)
+        {
+            if (YesRepeat.Checked)
+            {
                 DaysRepeatTextBox.Enabled = true;
             }
         }
 
-        protected void Calendar3_SelectionChanged(object sender, EventArgs e) {
+        protected void Calendar3_SelectionChanged(object sender, EventArgs e)
+        {
             EndDateTextBox.Text = Calendar3.SelectedDate.ToShortDateString();
 
             if (DaysRepeatTextBox.Text == "")
