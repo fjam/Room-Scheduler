@@ -1,0 +1,6 @@
+C:\Users\staff\Desktop\otherstuff\GCWE Scheduler2\GCWE Scheduler\bin\GCWE Scheduler.dll.config
+C:\Users\staff\Desktop\otherstuff\GCWE Scheduler2\GCWE Scheduler\bin\GCWE Scheduler.dll
+C:\Users\staff\Desktop\otherstuff\GCWE Scheduler2\GCWE Scheduler\bin\GCWE Scheduler.pdb
+C:\Users\staff\Desktop\otherstuff\GCWE Scheduler2\GCWE Scheduler\obj\Release\GCWE Scheduler.csprojResolveAssemblyReference.cache
+C:\Users\staff\Desktop\otherstuff\GCWE Scheduler2\GCWE Scheduler\obj\Release\GCWE Scheduler.dll
+C:\Users\staff\Desktop\otherstuff\GCWE Scheduler2\GCWE Scheduler\obj\Release\GCWE Scheduler.pdb
