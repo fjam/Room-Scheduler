@@ -143,12 +143,10 @@
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [FirstName], [LastName], [XT], [Room], [Monday], [Tuesday], [Wednesday], [Thursday], [Friday] FROM [StaffHours]"></asp:SqlDataSource>
             </div>
         </p>
+        <p>
+            &nbsp;</p>
     </form>
-    <p>
-        &nbsp;
-    </p>
-    <p>
-        &nbsp;
-    </p>
-</body>
+
+    <a href="Docs/How to use the GCWE Scheduler.pdf">Need Help?</a>
+    </body>
 </html>
