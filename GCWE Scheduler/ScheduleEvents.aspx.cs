@@ -31,7 +31,8 @@ namespace GCWE_Scheduler
         {
             if (Session["New"] != null)
             {
-                Label2.Text = "Welcome: " + Session["New"].ToString();
+                Label2.ForeColor = System.Drawing.Color.FromArgb(153, 0, 0);
+                Label2.Text = Session["New"].ToString();
                 username = Session["New"].ToString();
             }
             else
@@ -42,7 +43,6 @@ namespace GCWE_Scheduler
 
         protected void Calendar1_SelectionChanged(object sender, EventArgs e)
         {
-
             SqlConnection thisConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
 
             SqlCommand thisCommand = thisConnection.CreateCommand();
@@ -679,16 +679,31 @@ namespace GCWE_Scheduler
                     {
                         dt = DateTime.Parse(StartTimeTextBox.Text.ToString());
 
+                        string repdays = "";
+                        int index = 0;
+                        foreach (ListItem li in CheckBoxList1.Items)
+                        {
+                            if (li.Selected)
+                            {
+                                if (index > 0)
+                                {
+                                    repdays += ":";
+                                }
+                                repdays += li;
+                                index++;
+                            }
+                        }
+
                         com.Parameters.AddWithValue("@Section", SectionTextBox.Text);
                         com.Parameters.AddWithValue("@Title", EventNameTextBox.Text);
                         com.Parameters.AddWithValue("@EventStart", DateTime.Parse(StartTimeTextBox.Text).ToString("HH:mm:ss"));
                         com.Parameters.AddWithValue("@EventEnd", DateTime.Parse(EndTimeTextBox.Text).ToString("HH:mm:ss"));
                         com.Parameters.AddWithValue("@Repeat", (YesRepeat.Checked) ? 1 : 0);
-                        com.Parameters.AddWithValue("@Days", DaysRepeatTextBox.Text);
+                        com.Parameters.AddWithValue("@Days", repdays); //DaysRepeatTextBox.Text);
                         com.Parameters.AddWithValue("@Room", DropDownList1.SelectedValue);
                         com.Parameters.AddWithValue("@StartDate", Calendar2.SelectedDate.ToShortDateString());
                         com.Parameters.AddWithValue("@User", username);
-                        com.Parameters.AddWithValue("@notes", NotesTextBox.Text);
+                        com.Parameters.AddWithValue("@notes", (NotesTextBox.Text == "") ? "None" : NotesTextBox.Text);
                         com.Parameters.AddWithValue("@type", typeDropDownList.SelectedValue);
                         com.Parameters.AddWithValue("@Instructor", InstructorTextBox.Text);
                         com.Parameters.AddWithValue("@EndDate", EndDateTextBox.Text);
@@ -715,43 +730,11 @@ namespace GCWE_Scheduler
         protected void Calendar2_SelectionChanged(object sender, EventArgs e)
         {
             StartDateTextBox.Text = Calendar2.SelectedDate.ToShortDateString();
-
-            if (DaysRepeatTextBox.Text == "")
-            {
-                DaysRepeatTextBox.Text += Calendar2.SelectedDate.DayOfWeek.ToString();
-            }
-            else
-            {
-                if (!DaysRepeatTextBox.Text.Contains(Calendar2.SelectedDate.DayOfWeek.ToString()))
-                {
-                    DaysRepeatTextBox.Text += ":" + Calendar2.SelectedDate.DayOfWeek.ToString();
-                }
-            }
-        }
-
-        protected void YesRepeat_CheckedChanged(object sender, EventArgs e)
-        {
-            if (YesRepeat.Checked)
-            {
-                DaysRepeatTextBox.Enabled = true;
-            }
         }
 
         protected void Calendar3_SelectionChanged(object sender, EventArgs e)
         {
             EndDateTextBox.Text = Calendar3.SelectedDate.ToShortDateString();
-
-            if (DaysRepeatTextBox.Text == "")
-            {
-                DaysRepeatTextBox.Text += Calendar3.SelectedDate.DayOfWeek.ToString();
-            }
-            else
-            {
-                if (!DaysRepeatTextBox.Text.Contains(Calendar3.SelectedDate.DayOfWeek.ToString()))
-                {
-                    DaysRepeatTextBox.Text += ":" + Calendar3.SelectedDate.DayOfWeek.ToString();
-                }
-            }
         }
     }
 }

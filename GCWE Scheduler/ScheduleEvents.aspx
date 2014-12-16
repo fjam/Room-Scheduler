@@ -16,6 +16,8 @@
     <form id="form1" runat="server">
         <div>
 
+            Welcome:
+
             <asp:Label ID="Label2" runat="server" Font-Bold="False" Font-Size="Large"></asp:Label>
             <br />
             <br />
@@ -152,7 +154,7 @@
                 <tr>
                     <td class="auto-style2"><strong>Starting Date of Event:</strong></td>
                     <td class="auto-style3">
-                        <asp:Calendar ID="Calendar2" runat="server" Height="109px" OnSelectionChanged="Calendar2_SelectionChanged" Width="190px" BackColor="White" BorderColor="#3366CC" BorderWidth="1px" CellPadding="1" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#003399">
+                        <asp:Calendar ID="Calendar2" runat="server" Height="109px" Width="190px" BackColor="White" BorderColor="#3366CC" BorderWidth="1px" CellPadding="1" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#003399" OnSelectionChanged="Calendar2_SelectionChanged">
                             <DayHeaderStyle BackColor="#99CCCC" ForeColor="#336666" Height="1px" />
                             <NextPrevStyle Font-Size="8pt" ForeColor="#CCCCFF" />
                             <OtherMonthDayStyle ForeColor="#999999" />
@@ -173,7 +175,7 @@
                     <td class="auto-style2"><strong>Ending Date of Event:</strong></td>
                     <td class="auto-style3">
                         <br />
-                        <asp:Calendar ID="Calendar3" runat="server" Height="109px" OnSelectionChanged="Calendar3_SelectionChanged" Width="190px" BackColor="White" BorderColor="#3366CC" BorderWidth="1px" CellPadding="1" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#003399">
+                        <asp:Calendar ID="Calendar3" runat="server" Height="109px" Width="190px" BackColor="White" BorderColor="#3366CC" BorderWidth="1px" CellPadding="1" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#003399" OnSelectionChanged="Calendar3_SelectionChanged">
                             <DayHeaderStyle BackColor="#99CCCC" ForeColor="#336666" Height="1px" />
                             <NextPrevStyle Font-Size="8pt" ForeColor="#CCCCFF" />
                             <OtherMonthDayStyle ForeColor="#999999" />
@@ -194,21 +196,29 @@
                 <tr>
                     <td class="auto-style2"><strong>Repeat</strong></td>
                     <td class="auto-style3">
-                        <asp:RadioButton ID="YesRepeat" runat="server" GroupName="Repeat" Text="Yes" OnCheckedChanged="YesRepeat_CheckedChanged" />
+                        <asp:RadioButton ID="YesRepeat" runat="server" GroupName="Repeat" Text="Yes" />
                         <asp:RadioButton ID="NoRepeat" runat="server" GroupName="Repeat" Text="No" />
                         <br />
                     </td>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="auto-style2"><strong>Days to repeat: 
-                        <br />
-                        (Ex. Monday:Wednesday)</strong></td>
+                    <td class="auto-style2"><strong>Days of event: </strong></td>
                     <td class="auto-style3">
 
-                        <asp:TextBox ID="DaysRepeatTextBox" runat="server"></asp:TextBox></td>
+                        <asp:CheckBoxList ID="CheckBoxList1" runat="server" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                            <asp:ListItem>Sunday</asp:ListItem>
+                            <asp:ListItem>Monday</asp:ListItem>
+                            <asp:ListItem>Tuesday</asp:ListItem>
+                            <asp:ListItem>Wednesday</asp:ListItem>
+                            <asp:ListItem>Thursday</asp:ListItem>
+                            <asp:ListItem>Friday</asp:ListItem>
+                            <asp:ListItem>Saturday</asp:ListItem>
+                        </asp:CheckBoxList>
+                        <br />
+                    </td>
                     <td>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="DaysRepeatTextBox" ErrorMessage="Enter Days to repeat" ForeColor="Red" ValidationGroup="group1"></asp:RequiredFieldValidator>
+                       
                     </td>
                 </tr>
 
